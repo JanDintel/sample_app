@@ -5,11 +5,6 @@ describe "StaticPages" do
      have_title("Ruby on Rails Tutorial Sample App | #{title}")
   end
 
-  def let(name)
-    @lets ||= {}
-    @lets[name] ||= iets
-  end
-
   describe "Home page" do
     let(:title) { 'Home' }
     it "does have the content 'Sample App'" do
@@ -17,9 +12,14 @@ describe "StaticPages" do
       expect(page).to have_content('Sample App')
     end
 
-    it "does have the right title" do
+    it "does have the base title" do
       visit '/static_pages/home'
-      expect(page).to should_have_title
+      expect(page).to have_title("Ruby on Rails Tutorial Sample App")
+    end
+
+    it "should not have a custom page title" do
+      visit '/static_pages/home'
+      expect(page).not_to have_title('| Home')
     end
   end
   describe "Help page" do
