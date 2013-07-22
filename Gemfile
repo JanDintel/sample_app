@@ -9,6 +9,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'guard-livereload'
+  # rubygems is niet up to date
+  gem 'spork-rails', github: 'sporkrb/spork-rails'
+  gem 'guard-spork'
+  gem 'childprocess'
 end
 
 group :test do
