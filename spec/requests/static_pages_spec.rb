@@ -30,4 +30,25 @@ describe "StaticPages" do
     before { visit contact_path }
     it { should have_title(full_title('Contact')) }
   end
+
+  def right_title(title)
+    click_link "#{title}" 
+    expect(page).to have_title(full_title("#{title}"))
+  end
+
+  
+  it "does have the right links on the layout" do
+    titles = ["Help", "About", "Contact"]
+    visit root_path
+    
+    titles.each do |t|
+      right_title(t)
+    end
+
+    visit root_path
+    click_link "Sign up now!"
+    expect(page).to have_title(full_title("Sign up"))
+    click_link "Sample App"
+    expect(page).to have_title(full_title(""))
+  end
 end
