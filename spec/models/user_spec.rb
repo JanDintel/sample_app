@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { User.new(name: "Aap", email: "aap@mies.nl") }
+  let(:user) { User.new(name: "Aap", email: "aap@mies.nl", 
+                        password: "foobar", password_confirmation: "foobar") }
 
   subject { user }
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
 
   it { should be_valid }
 
@@ -31,6 +35,19 @@ describe User do
       user_with_same_email.email = user.email.upcase
       user_with_same_email.save
     end
+    it { should_not be_valid }
+  end
+
+  describe "when password is not present" do
+    before do
+      user.update_attributes(password: " ", password_confirmation: " ")
+      user.save
+    end
+    it { should_not be_valid }
+  end
+
+  describe "when password doesn't match conformation" do
+    before { user.password_confirmation = "notthesame" }
     it { should_not be_valid }
   end
 
