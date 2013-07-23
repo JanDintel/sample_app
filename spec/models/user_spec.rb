@@ -94,4 +94,15 @@ describe User do
       end
     end
   end
+
+  describe "when email is mixed case" do
+    let(:email_with_mixed_case) { "FooBLAaa@BrEeZeR.CoM" }
+
+    it "should be saved downcase" do
+      user.email = email_with_mixed_case
+      user.save
+      # Moet reload doen, anders wordt de before save niet aangeroepen in de User model
+      expect(user.reload.email).to eq email_with_mixed_case.downcase      
+    end
+  end
 end
