@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   let(:user) { User.new(name: "Aap", email: "aap@mies.nl", 
-                        password: "foobar", password_confirmation: "foobar") }
+                        password: "8letterigww", password_confirmation: "8letterigww") }
 
   subject { user }
 
@@ -11,6 +11,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:authenticate) }
 
   it { should be_valid }
 
@@ -25,7 +26,7 @@ describe User do
   end
 
   describe "when email is too long" do
-    before { user.email = "a" * 51 }
+    before { user.email = "x" * 51 }
     it { should_not be_valid }
   end
 
@@ -49,6 +50,28 @@ describe User do
   describe "when password doesn't match conformation" do
     before { user.password_confirmation = "notthesame" }
     it { should_not be_valid }
+  end
+
+  describe "when password is too short" do
+    before  { user.password = user.password_confirmation = "x" * 7 }
+    it { should_not be_valid }
+  end
+
+  describe "return value of authenticate method" do
+    before { user.save }
+    let(:found_user) { User.find_by(email: user.email) }
+
+    describe "with valid password" do
+      it { should eq found_user.authenticate(user.password) }
+    end
+
+    describe "with invalid password" do
+      let(:found_user_with_invalid_password) { found_user.authenticate("invalidpassword") }
+
+      # Het zou geen record van found_user moeten terug geven, vandaar should_not
+      it { should_not eq found_user_with_invalid_password }
+      specify { expect(found_user_with_invalid_password).to be_false } # Specify staat gelijk aan it, klinkt anders onnatuurlijk
+    end
   end
 
   describe "when email format is invalid" do
