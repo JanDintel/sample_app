@@ -36,6 +36,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'haml'
 gem 'bootstrap-sass'
+gem 'simple_form'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
