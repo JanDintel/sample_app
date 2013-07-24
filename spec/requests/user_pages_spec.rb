@@ -30,7 +30,14 @@ describe "UserPages" do
       end
 
       it "does create a user" do
-        expect  { click_button submit }.to change(User, :count).by(1)
+        expect { click_button submit }.to change(User, :count).by(1)
+      end
+
+      describe "does redirect to user profile page" do
+        before { click_button submit }
+
+        it { should have_title(full_title(user.name)) }
+        it { should have_selector('div.alert.alert-success') }
       end
     end
   end
