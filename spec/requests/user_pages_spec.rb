@@ -33,11 +33,17 @@ describe "UserPages" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
 
+      describe "does sign in user after create" do
+        before { click_button submit }
+
+        it { should have_link('Sign out') }
+      end
+
       describe "does redirect to user profile page" do
         before { click_button submit }
 
         it { should have_title(full_title(user.name)) }
-        it { should have_selector('div.alert.alert-success') }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
     end
   end

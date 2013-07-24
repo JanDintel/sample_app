@@ -12,6 +12,7 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:remember_token) }
 
   it { should be_valid }
 
@@ -104,5 +105,10 @@ describe User do
       # Moet reload doen, anders wordt de before save niet aangeroepen in de User model
       expect(user.reload.email).to eq email_with_mixed_case.downcase      
     end
+  end
+
+  describe "when assinged a remember_token" do
+    before  { user.save }
+    its(:remember_token) { should_not be_blank }
   end
 end
