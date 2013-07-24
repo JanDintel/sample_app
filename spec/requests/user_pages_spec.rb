@@ -14,9 +14,11 @@ describe "UserPages" do
     let(:submit) { "Create my account" }
 
     describe "with invalid information" do
-      it "does not create account" do
-        expect { click_button submit }.not_to change(User, :count)
+      it "does not create a new user" do
+        expect{ click_button submit }.to_not change(User, :count)
       end
+      before { click_button submit }
+      it { should have_content('error') }
     end
 
     describe "with valid information" do
@@ -34,7 +36,10 @@ describe "UserPages" do
   end
 
   describe "Profile page" do
-    before { visit user_path(user) }
+    before do 
+      user_profile = FactoryGirl.create(:user)
+      visit user_path(user_profile)
+    end
 
     it { should have_content(user.name) }
     it { should have_title(full_title(user.name)) }
