@@ -4,7 +4,7 @@ Feature: Signing in
     Given a user visits the signin page
       And the user has an account
     When he submits invalid signin information
-    Then he should see an error message
+    Then he should see an authentication error message
 
   Scenario: Successful signin
     Given a user visits the signin page
