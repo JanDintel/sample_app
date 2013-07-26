@@ -18,3 +18,8 @@ Feature: Authentication
   Scenario: Visits profile settings page
     When he visits the profile settings page
     Then he should be redirected to the log in page
+      And he should see an error message that he needs to be logged in
+
+  Scenario: Visits profile settings page as an unauthorized user
+    Given the user is unauthorized to visit the profile settings page
+    Then he should be redirected to the root page

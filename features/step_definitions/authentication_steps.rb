@@ -34,3 +34,16 @@ Then /^he should be redirected to the log in page$/ do
   show_flash_message('notice', "Need to be logged in")
   expect(page).to have_content('Sign in')
 end
+
+And /^he should see an error message that he needs to be logged in$/ do
+  show_flash_message('notice', "Need to be logged in")
+end
+
+Given /^the user is unauthorized to visit the profile settings page$/ do
+  @different_user = FactoryGirl.create(:user, email: "different_user@mail.nl")
+  sign_in_user(@user, no_capybara: true)
+end
+
+Then /^he should be redirected to the root page$/ do
+  visit edit_user_path(@different_user)
+end

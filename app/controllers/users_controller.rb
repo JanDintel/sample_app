@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update]
+  before_action :authorized_user, only: [:edit, :update]
 
   def index
   end
@@ -46,5 +47,10 @@ class UsersController < ApplicationController
 
     def signed_in_user
       redirect_to sign_in_path, notice: "Need to be logged in" unless signed_in?
+    end
+
+    def authorized_user
+      @user = User.find(params[:id])
+      redirect_to root_path unless current_user?(@user)
     end
 end
