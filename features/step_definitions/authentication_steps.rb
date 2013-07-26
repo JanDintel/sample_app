@@ -1,3 +1,7 @@
+Given /^a user has an account is in not signed in$/ do
+  user_has_account
+end
+
 Given /^a user visits the signin page$/ do
   visit sign_in_path
 end
@@ -7,11 +11,7 @@ When /^he submits invalid signin information$/ do
 end
 
 Then /^he should see an authentication error message$/ do
-  show_flash_message('error')
-end
-
-Given /^the user has an account$/ do
-  user_has_account
+  show_flash_message('error', "Failed")
 end
 
 When /^the user submits valid signin information$/ do
@@ -28,4 +28,9 @@ end
 
 And /^he should see a profile settings link$/ do
   expect(page).to have_link('Settings', href: edit_user_path(@user))
+end
+
+Then /^he should be redirected to the log in page$/ do
+  show_flash_message('notice', "Need to be logged in")
+  expect(page).to have_content('Sign in')
 end

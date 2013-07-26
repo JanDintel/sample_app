@@ -1,10 +1,12 @@
-Before { user_has_account }
+Given /^a user has an account$/ do
+  user_has_account
+end
 
-Given /^a user is authorized to edit settings$/ do
+Given /^a user is signed in$/ do
   sign_in_user(@user)
 end
 
-When /^he visits his settings page$/ do
+When /^he visits the profile settings page$/ do
   visit edit_user_path(@user)
 end
 
@@ -38,7 +40,7 @@ When /^the information he edits is valid$/ do
 end
 
 Then /^he should be redirect to his updated profile$/ do
-  show_flash_message('success')
+  show_flash_message('success', "Updated")
   correct_page_with_title(@new_name)
   expect(page).to have_content(@new_email)
 end

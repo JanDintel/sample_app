@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  
+  before_action :signed_in_user, only: [:edit, :update]
+
   def index
   end
 
@@ -43,4 +44,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)    
     end
 
+    def signed_in_user
+      redirect_to sign_in_path, notice: "Need to be logged in" unless signed_in?
+    end
 end
