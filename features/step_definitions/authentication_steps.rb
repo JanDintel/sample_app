@@ -16,9 +16,6 @@ end
 
 When /^the user submits valid signin information$/ do
   sign_in_user(@user)
-#   fill_in "Email",    with: @user.email
-#   fill_in "Password", with: @user.password
-#   click_button "Sign in"
 end
 
 Then /^he should see his profile page$/ do
@@ -27,4 +24,8 @@ end
 
 Then /^he should see a signout link$/ do
   expect(page).to have_link('Sign out', href: sign_out_path)
+end
+
+And /^he should see a profile settings link$/ do
+  expect(page).to have_link('Settings', href: edit_user_path(@user))
 end

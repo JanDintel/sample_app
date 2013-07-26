@@ -8,4 +8,10 @@ Feature: User settings page
   Scenario: Invalid edit
     Given a user edits his information
     When the information he edits is invalid
-    Then he should see an invalid edit error message
+    Then he should stay on the profile settings page
+
+  Scenario: Valid edit
+    Given a user edits his information
+    When the information he edits is valid
+    Then he should be redirect to his updated profile
+
