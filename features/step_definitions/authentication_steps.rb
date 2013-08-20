@@ -39,6 +39,10 @@ And /^he should see an error message that he needs to be logged in$/ do
   show_flash_message('notice', "Need to be logged in")
 end
 
+Then /^he should see the visited profile settings page$/ do
+  expect(page).to have_content('Update your profile')
+end
+
 Given /^the user is unauthorized to visit the profile settings page$/ do
   @different_user = FactoryGirl.create(:user, email: "different_user@mail.nl")
   sign_in_user(@user, no_capybara: true)

@@ -46,7 +46,10 @@ class UsersController < ApplicationController
     end
 
     def signed_in_user
-      redirect_to sign_in_path, notice: "Need to be logged in" unless signed_in?
+      unless signed_in?
+        store_location
+        redirect_to sign_in_path, notice: "Need to be logged in"
+      end
     end
 
     def authorized_user

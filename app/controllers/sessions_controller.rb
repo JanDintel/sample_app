@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:sessions][:password])
       sign_in user # sign_in is in SessionHelper (included in ApplicationController)
       flash[:success] = "Signed in"
-      redirect_to user
+      redirect_back_to user
     else
       flash.now[:error] = "Failed to sign in, check email/password"
       render 'new'

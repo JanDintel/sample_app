@@ -19,6 +19,8 @@ Feature: Authentication
     When he visits the profile settings page
     Then he should be redirected to the log in page
       And he should see an error message that he needs to be logged in
+    When the user submits valid signin information
+    Then he should see the visited profile settings page
 
   Scenario: Visits profile settings page as an unauthorized user
     Given the user is unauthorized to visit the profile settings page
